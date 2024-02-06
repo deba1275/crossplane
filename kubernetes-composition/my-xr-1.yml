@@ -1,0 +1,8 @@
+apiVersion: onboarding.io/v1alpha1
+kind: ocponboarding
+metadata:
+  name: ocp-ucp-1
+spec:
+  parameters:
+    NSName: my-ucp-1
+    AzGrName: cld-my-ucp-sg

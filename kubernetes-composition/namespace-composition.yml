@@ -1,0 +1,67 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: ocponboarding-composition
+  labels:
+    provider: kubernetes
+    crossplane.io/xrd: xocp.onboarding.io
+spec:
+  # should I set this here ? Please help
+  # writeConnectionSecretsToNamespace: crossplane
+  compositeTypeRef:
+    apiVersion: onboarding.io/v1alpha1
+    kind: Xocponboarding
+  resources:
+    - name: namespace
+      base:
+        apiVersion: kubernetes.crossplane.io/v1alpha1
+        kind: Object
+        spec:
+          forProvider:
+            manifest:
+              apiVersion: v1
+              kind: Namespace
+              metadata:
+                labels:
+                  AppID: crossplane
+          providerConfigRef:
+            name: kubernetes-providercfg
+      patches:
+        # set the name of the namespace to be created
+        - fromFieldPath: "spec.parameters.NSName"
+          toFieldPath: "spec.forProvider.manifest.metadata.name"
+        - fromFieldPath: "spec.parameters.NSName"
+          toFieldPath: "spec.forProvider.manifest.metadata.labels.AppID"
+    # This section added for role binding
+    - name: rolebinding
+      base:
+        apiVersion: kubernetes.crossplane.io/v1alpha1
+        kind: Object
+        spec:
+          forProvider:
+            manifest:
+              apiVersion: rbac.authorization.k8s.io/v1
+              kind: RoleBinding
+              metadata:
+                #name: name of the rolebinding
+                #namespace: created above
+                labels:
+                  app: crossplane
+              subjects:
+                - kind: Group
+                  apiGroup: rbac.authorization.k8s.io
+                  #name: cld-mygroup-sg --> To be AZ group name
+              roleRef:
+                apiGroup: rbac.authorization.k8s.io
+                kind: ClusterRole
+                name: admin
+          providerConfigRef:
+            name: kubernetes-providercfg
+      patches:
+        # set Rolebinding name and AzGrName
+        - fromFieldPath: "spec.parameters.NSName"
+          toFieldPath: "spec.forProvider.manifest.metadata.name"
+        - fromFieldPath: "spec.parameters.NSName"
+          toFieldPath: "spec.forProvider.manifest.metadata.namespace"
+        - fromFieldPath: "spec.parameters.AzGrName"
+          toFieldPath: "spec.forProvider.manifest.subjects[0].name"

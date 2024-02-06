@@ -1,0 +1,41 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xocp.onboarding.io
+spec:
+  group: onboarding.io
+  names:
+    kind: Xocponboarding
+    plural: xocp
+  claimNames:
+    kind: ocponboarding
+    plural: ocp
+  versions:
+  - name: v1alpha1
+    served: true
+    referenceable: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              parameters:
+                type: object
+                properties:
+                  NSName:
+                    type: string
+                    description: Name of the namespace - string
+                  AppID:
+                    type: string
+                    description: Application ID as per Alfabet
+                  AzGrName:
+                    type: string
+                    description: Name of the AD Group for Access - string
+                required:
+                  - NSName
+                  - AppID
+                  - AzGrName
+            required:
+              - parameters
