@@ -25,7 +25,7 @@ spec:
                 labels:
                   AppID: crossplane
           providerConfigRef:
-            name: kubernetes-providercfg
+            name: kubernetes-provider-config
       patches:
         # set the name of the namespace to be created
         - fromFieldPath: "spec.parameters.NSName"
@@ -56,7 +56,7 @@ spec:
                 kind: ClusterRole
                 name: admin
           providerConfigRef:
-            name: kubernetes-providercfg
+            name: kubernetes-provider-config
       patches:
         # set Rolebinding name and AzGrName
         - fromFieldPath: "spec.parameters.NSName"

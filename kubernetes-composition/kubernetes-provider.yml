@@ -1,0 +1,9 @@
+# Apply SCC
+# SA=$(kubectl -n crossplane-system get sa -o name | grep provider-kubernetes | sed -e 's|serviceaccount\/|crossplane-system:|g')
+# oc adm policy add-scc-to-user anyuid system:serviceaccount:${SA}
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-kubernetes
+spec:
+  package: "crossplanecontrib/provider-kubernetes:main"
