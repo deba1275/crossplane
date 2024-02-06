@@ -1,0 +1,9 @@
+apiVersion: onboarding.io/v1alpha1
+kind: Xocponboarding
+metadata:
+  name: ocp-ucp
+spec:
+  parameters:
+    NSName: my-ucp
+    AppID: App-01
+    AzGrName: cld-my-ucp-sg
