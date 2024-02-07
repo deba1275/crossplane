@@ -80,6 +80,6 @@ spec:
           providerConfigRef:
             name: azure-profiderconfig
       patches:
-        # set the name of the namespace to be created
+        # Annotation to create external resources with composition defination
         - fromFieldPath: "metadata.annotations"
           toFieldPath: "metadata.annotations"
