@@ -2,6 +2,8 @@ apiVersion: onboarding.io/v1alpha1
 kind: Xocponboarding
 metadata:
   name: ocp-ucp
+  annotations: 
+    crossplane.io/external-name: rg-my-ucp  
 spec:
   parameters:
     NSName: my-ucp

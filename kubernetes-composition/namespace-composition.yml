@@ -81,7 +81,5 @@ spec:
             name: azure-profiderconfig
       patches:
         # set the name of the namespace to be created
-        - fromFieldPath: "spec.parameters.RGName"
-          toFieldPath: "spec.forProvider.manifest.metadata.name"
-        - fromFieldPath: "spec.parameters.NSName"
-          toFieldPath: "spec.forProvider.manifest.metadata.labels.AppID"
+        - fromFieldPath: "metadata.annotations"
+          toFieldPath: "metadata.annotations"
