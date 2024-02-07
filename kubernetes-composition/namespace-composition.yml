@@ -65,3 +65,23 @@ spec:
           toFieldPath: "spec.forProvider.manifest.metadata.namespace"
         - fromFieldPath: "spec.parameters.AzGrName"
           toFieldPath: "spec.forProvider.manifest.subjects[0].name"
+    # This section added for provisioning azure resources
+    - name: resourcegroup
+      base:
+        apiVersion: azure.upbound.io/v1beta1
+        kind: ResourceGroup
+        metadata:
+          #name: name of the resourec group
+        spec:
+          forProvider:
+            location: "West Europe"
+            tags:
+              provisioner: crossplane
+          providerConfigRef:
+            name: azure-profiderconfig
+      patches:
+        # set the name of the namespace to be created
+        - fromFieldPath: "spec.parameters.RGName"
+          toFieldPath: "spec.forProvider.manifest.metadata.name"
+        - fromFieldPath: "spec.parameters.NSName"
+          toFieldPath: "spec.forProvider.manifest.metadata.labels.AppID"
